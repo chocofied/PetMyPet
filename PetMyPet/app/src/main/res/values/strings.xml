@@ -7,4 +7,5 @@
     <string name="title_activity_login1">Login1</string>
     <string name="title_activity_register">Register</string>
     <string name="title_activity_main">Main</string>
+    <color name="green">#51EDC6</color>
 </resources>
