@@ -1,6 +1,7 @@
 package com.example.csun24.petmypet;
 
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -20,6 +21,8 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
+
+
 import java.util.ArrayList;
 
 
@@ -27,6 +30,8 @@ public class ServerRequests {
     ProgressDialog progressDialog;
     public static final int CONNECTION_TIMEOUT = 1000 * 15;
     public static final String SERVER_ADDRESS = "http://petmypet.site90.net/";
+
+//    URIBuilder build = new URIBuilder("http://petmypet.site90.net/");
 
     public ServerRequests(Context context) {
         progressDialog = new ProgressDialog(context);
@@ -61,11 +66,18 @@ public class ServerRequests {
 
         @Override
         protected Void doInBackground(Void... params) {
-            ArrayList<NameValuePair> dataToSend = new ArrayList<NameValuePair>();
+           /* ContentValues dataToSend = new ContentValues();
+            dataToSend.put("name", user.name);
+            dataToSend.put("username", user.username);
+            dataToSend.put("password", user.password);
+            dataToSend.put("phone", user.phone);*/
+
+            ArrayList<NameValuePair> dataToSend = new ArrayList<>();
+
             dataToSend.add(new BasicNameValuePair("name", user.name));
             dataToSend.add(new BasicNameValuePair("username", user.username));
             dataToSend.add(new BasicNameValuePair("password", user.password));
-            dataToSend.add(new BasicNameValuePair("age", user.phone + ""));
+            dataToSend.add(new BasicNameValuePair("phone", user.phone));
 
             HttpParams httpRequestParams = getHttpRequestParams();
 
@@ -122,6 +134,7 @@ public class ServerRequests {
             HttpConnectionParams.setSoTimeout(httpRequestParams,
                     CONNECTION_TIMEOUT);
 
+
             HttpClient client = new DefaultHttpClient(httpRequestParams);
             HttpPost post = new HttpPost(SERVER_ADDRESS
                     + "FetchUserData.php");
@@ -139,9 +152,9 @@ public class ServerRequests {
                 if (jObject.length() != 0){
                     Log.v("happened", "2");
                     String name = jObject.getString("name");
-                    int age = jObject.getInt("age");
+                    String phone = jObject.getString("phone");
 
-                    returnedUser = new User(name, age, user.username,
+                    returnedUser = new User(name, phone, user.username,
                             user.password);
                 }
 
