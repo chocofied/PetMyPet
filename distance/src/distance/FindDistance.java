@@ -22,6 +22,7 @@ public class FindDistance {
 				+ URLEncoder.encode(destinationSplit[2], "UTF-8")
 				+ "&mode=driving&key=" + API_KEY;
 		URL url = new URL(ecodedURL);
+		System.out.println(url);
 		try {
 			BufferedReader in = new BufferedReader(new InputStreamReader(
 					url.openStream(), "UTF-8"));
